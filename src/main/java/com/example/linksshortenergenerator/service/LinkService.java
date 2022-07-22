@@ -1,16 +1,18 @@
 package com.example.linksshortenergenerator.service;
 
-import com.example.linksshortenergenerator.exception.AliasAlreadyExistException;
-import com.example.linksshortenergenerator.repository.LinkRepository;
 import com.example.linksshortenergenerator.dto.LinkCreateDto;
 import com.example.linksshortenergenerator.dto.LinkResponseDto;
+import com.example.linksshortenergenerator.exception.AliasAlreadyExistException;
 import com.example.linksshortenergenerator.mapper.LinkResponseMapper;
 import com.example.linksshortenergenerator.model.Link;
+import com.example.linksshortenergenerator.repository.LinkRepository;
 import lombok.AllArgsConstructor;
 import org.apache.commons.text.CharacterPredicates;
 import org.apache.commons.text.RandomStringGenerator;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.time.LocalDateTime;
 import java.util.Optional;
 
@@ -18,6 +20,7 @@ import java.util.Optional;
 @AllArgsConstructor
 public class LinkService {
 
+    public static final int LINK_PERIOD_TIME = 15;
     private final LinkRepository linkRepository;
     private final LinkResponseMapper linkResponseMapper;
 
@@ -67,5 +70,12 @@ public class LinkService {
                 .filteredBy(CharacterPredicates.LETTERS, CharacterPredicates.DIGITS)
                 .build();
         return randomStringGenerator.generate(12);
+    }
+
+    @Scheduled(fixedRate = 10000)
+    @Transactional
+    public void deleteOldLinks() {
+        LocalDateTime time = LocalDateTime.now().minusMinutes(LINK_PERIOD_TIME);
+        linkRepository.deleteOldLinks(time);
     }
 }

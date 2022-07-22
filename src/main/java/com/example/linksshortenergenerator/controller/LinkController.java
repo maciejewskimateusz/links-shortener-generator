@@ -7,6 +7,7 @@ import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import java.net.URI;
 
@@ -20,7 +21,13 @@ public class LinkController {
     @PostMapping
     ResponseEntity<LinkResponseDto> shortenLink(@RequestBody LinkCreateDto link) {
         LinkResponseDto shortenLink = linkService.shortenLink(link);
-        return ResponseEntity.ok(shortenLink);
+        URI uri = ServletUriComponentsBuilder
+                .fromCurrentRequest()
+                .path("/{id}")
+                .buildAndExpand(shortenLink.getId())
+                .toUri();
+
+        return ResponseEntity.created(uri).body(shortenLink);
     }
 
     @GetMapping("/{id}")
@@ -32,6 +39,5 @@ public class LinkController {
                         .location(URI.create(link))
                         .build())
                 .orElse(ResponseEntity.notFound().build());
-
     }
 }

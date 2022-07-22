@@ -14,6 +14,7 @@ public class LinkResponseMapper {
         return new LinkResponseDto(link.getId(), link.getUrl(), shortenLink, link.getCreatedAt());
     }
 
+    // return full path for example: http://localhost:8080/api/links/123
     private String shortenLink(String id) {
         return ServletUriComponentsBuilder
                 .fromCurrentContextPath()
