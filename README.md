@@ -11,6 +11,6 @@ Simple URL shortener generator created using:
 3. Enjoy
 
 # Usage
-POST `/api/links` with body as `your_long_url` for creating short url with random alias
-POST `/api/links/{your_alias}` with body as `"alias": "your_alias" and "url": "your_long_url"` for creating short url with your alias
-GET `/api/links/{id}` - get long url from short alias
+* POST `/api/links` with body as `your_long_url` for creating short url with random alias
+* POST `/api/links/{your_alias}` with body as `"alias": "your_alias" and "url": "your_long_url"` for creating short url with your alias
+* GET `/api/links/{id}` - get long url from short alias
