@@ -1,8 +1,8 @@
 # links-shortener-generator
 Simple URL shortener generator created using:
--Spring Boot
--Spring Web
--H2 DB
+* Spring boot
+* Spring Web
+* H2 DB
 
 
 # Installation
