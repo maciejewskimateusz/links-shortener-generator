@@ -6,9 +6,8 @@ Simple URL shortener generator created using:
 
 
 # Installation
-1. You need java 17
-2. Open docker-build.bat
-3. Enjoy
+1. Open docker-build.bat
+2. Enjoy
 
 # Usage
 * POST `/api/links` with body as `your_long_url` for creating short url with random alias
