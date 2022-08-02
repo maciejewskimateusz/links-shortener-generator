@@ -20,7 +20,7 @@ import java.util.Optional;
 @AllArgsConstructor
 public class LinkService {
 
-    public static final int LINK_PERIOD_TIME = 15;
+    public static final int LINK_PERIOD_TIME = 1;
     private final LinkRepository linkRepository;
     private final LinkResponseMapper linkResponseMapper;
 
