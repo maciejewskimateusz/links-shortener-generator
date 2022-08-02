@@ -2,7 +2,10 @@
 Simple URL shortener generator created using:
 * Spring boot
 * Spring Web
-* H2 DB
+* H2 DB - dev
+* MySQL - prod
+* Docker
+
 
 
 # Installation
