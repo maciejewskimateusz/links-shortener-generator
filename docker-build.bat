@@ -1,4 +1,3 @@
-call mvn clean package
 docker build . -t shortener-link-generator
 docker stop shortener-link-generator
 docker rm shortener-link-generator
