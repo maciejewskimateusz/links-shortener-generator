@@ -1,7 +1,7 @@
 package com.example.linksshortenergenerator.mapper;
 
-import com.example.linksshortenergenerator.dto.LinkResponseDto;
-import com.example.linksshortenergenerator.model.Link;
+import com.example.linksshortenergenerator.dto.link.LinkResponseDto;
+import com.example.linksshortenergenerator.model.link.Link;
 import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 

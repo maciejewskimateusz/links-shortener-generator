@@ -1,6 +1,6 @@
 package com.example.linksshortenergenerator.repository;
 
-import com.example.linksshortenergenerator.model.Link;
+import com.example.linksshortenergenerator.model.link.Link;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;

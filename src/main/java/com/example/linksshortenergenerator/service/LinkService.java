@@ -1,15 +1,16 @@
 package com.example.linksshortenergenerator.service;
 
-import com.example.linksshortenergenerator.dto.LinkCreateDto;
-import com.example.linksshortenergenerator.dto.LinkResponseDto;
+import com.example.linksshortenergenerator.dto.link.LinkCreateDto;
+import com.example.linksshortenergenerator.dto.link.LinkResponseDto;
 import com.example.linksshortenergenerator.exception.AliasAlreadyExistException;
 import com.example.linksshortenergenerator.mapper.LinkResponseMapper;
-import com.example.linksshortenergenerator.model.Link;
+import com.example.linksshortenergenerator.model.link.Link;
 import com.example.linksshortenergenerator.repository.LinkRepository;
 import lombok.AllArgsConstructor;
 import org.apache.commons.text.CharacterPredicates;
 import org.apache.commons.text.RandomStringGenerator;
 import org.springframework.scheduling.annotation.Scheduled;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
@@ -37,6 +38,13 @@ public class LinkService {
     public Optional<LinkResponseDto> findLink(String id) {
         return linkRepository.findById(id)
                 .map(linkResponseMapper::map);
+    }
+
+    public void deleteLink(String id) {
+        String name = SecurityContextHolder.getContext().getAuthentication().getName();
+        if (name.equals("jan"))
+            linkRepository.deleteById(id);
+
     }
 
     private LinkResponseDto shortenLinksWithGivenAlias(LinkCreateDto link) {

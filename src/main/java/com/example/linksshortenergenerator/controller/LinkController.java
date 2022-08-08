@@ -1,8 +1,8 @@
 package com.example.linksshortenergenerator.controller;
 
+import com.example.linksshortenergenerator.dto.link.LinkCreateDto;
+import com.example.linksshortenergenerator.dto.link.LinkResponseDto;
 import com.example.linksshortenergenerator.service.LinkService;
-import com.example.linksshortenergenerator.dto.LinkCreateDto;
-import com.example.linksshortenergenerator.dto.LinkResponseDto;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -39,5 +39,11 @@ public class LinkController {
                         .location(URI.create(link))
                         .build())
                 .orElse(ResponseEntity.notFound().build());
+    }
+
+    @DeleteMapping("/{id}")
+    ResponseEntity<?> deleteLink(@PathVariable String id) {
+        linkService.deleteLink(id);
+        return ResponseEntity.noContent().build();
     }
 }

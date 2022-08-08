@@ -1,4 +1,4 @@
-package com.example.linksshortenergenerator.dto;
+package com.example.linksshortenergenerator.dto.link;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
