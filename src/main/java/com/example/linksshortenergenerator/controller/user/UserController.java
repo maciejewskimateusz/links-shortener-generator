@@ -1,4 +1,4 @@
-package com.example.linksshortenergenerator.controller;
+package com.example.linksshortenergenerator.controller.user;
 
 import com.example.linksshortenergenerator.dto.user.UserRegistrationDto;
 import com.example.linksshortenergenerator.service.UserService;

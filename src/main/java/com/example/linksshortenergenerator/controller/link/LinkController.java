@@ -1,4 +1,4 @@
-package com.example.linksshortenergenerator.controller;
+package com.example.linksshortenergenerator.controller.link;
 
 import com.example.linksshortenergenerator.dto.link.LinkCreateDto;
 import com.example.linksshortenergenerator.dto.link.LinkResponseDto;
@@ -6,6 +6,7 @@ import com.example.linksshortenergenerator.service.LinkService;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
@@ -18,6 +19,7 @@ public class LinkController {
 
     private final LinkService linkService;
 
+//    @Secured({"ROLE_ADMIN", "ROLE_USER"})
     @PostMapping
     ResponseEntity<LinkResponseDto> shortenLink(@RequestBody LinkCreateDto link) {
         LinkResponseDto shortenLink = linkService.shortenLink(link);
@@ -30,6 +32,7 @@ public class LinkController {
         return ResponseEntity.created(uri).body(shortenLink);
     }
 
+//    @Secured({"ROLE_ADMIN", "ROLE_USER"})
     @GetMapping("/{id}")
     ResponseEntity<?> redirect(@PathVariable String id) {
         return linkService.findLink(id)
@@ -41,6 +44,7 @@ public class LinkController {
                 .orElse(ResponseEntity.notFound().build());
     }
 
+//    @Secured("ROLE_ADMIN")
     @DeleteMapping("/{id}")
     ResponseEntity<?> deleteLink(@PathVariable String id) {
         linkService.deleteLink(id);

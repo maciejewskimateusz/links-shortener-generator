@@ -3,23 +3,28 @@ package com.example.linksshortenergenerator.config.security;
 
 import com.example.linksshortenergenerator.dto.user.UserCredentialsDto;
 import com.example.linksshortenergenerator.service.UserService;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
+import java.util.Set;
+import java.util.stream.Collectors;
+
 @Service
 public class CustomUserDetailsService implements UserDetailsService {
 
     private UserService userService;
 
-    public CustomUserDetailsService(final UserService userService) {
+    public CustomUserDetailsService(UserService userService) {
         this.userService = userService;
     }
 
     @Override
-    public UserDetails loadUserByUsername(final String username) throws UsernameNotFoundException {
+    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         return userService.findByUsername(username)
                 .map(this::createUserDetails)
                 .orElseThrow(() -> new UsernameNotFoundException(String.format("User with email %s not found", username)));
@@ -30,7 +35,13 @@ public class CustomUserDetailsService implements UserDetailsService {
                 .username(user.getUsername())
                 .password(user.getPassword())
                 .roles(user.getRoles().toArray(String[]::new))
+//                .authorities(getGrantedAuthority(user))
                 .build();
+    }
+    private Set<GrantedAuthority> getGrantedAuthority(UserCredentialsDto user) {
+        return user.getRoles()
+                .stream().map(SimpleGrantedAuthority::new)
+                .collect(Collectors.toSet());
     }
 
 

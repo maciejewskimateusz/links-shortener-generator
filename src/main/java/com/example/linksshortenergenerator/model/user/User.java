@@ -3,6 +3,7 @@ package com.example.linksshortenergenerator.model.user;
 import lombok.Data;
 
 import javax.persistence.*;
+import java.util.HashSet;
 import java.util.Set;
 
 @Entity(name = "application_user")
@@ -21,5 +22,5 @@ public class User {
             joinColumns = @JoinColumn(name = "user_id", referencedColumnName = "id"),
             inverseJoinColumns = @JoinColumn(name = "role_id", referencedColumnName = "id")
     )
-    private Set<UserRole> roles;
+    private Set<UserRole> roles = new HashSet<>();
 }

@@ -1,4 +1,4 @@
-package com.example.linksshortenergenerator.repository;
+package com.example.linksshortenergenerator.repository.user;
 
 import com.example.linksshortenergenerator.model.user.UserRole;
 import org.springframework.data.jpa.repository.JpaRepository;

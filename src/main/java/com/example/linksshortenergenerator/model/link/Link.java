@@ -18,4 +18,5 @@ public class Link {
     private String id;
     private String url;
     private LocalDateTime createdAt;
+    private String createdBy;
 }

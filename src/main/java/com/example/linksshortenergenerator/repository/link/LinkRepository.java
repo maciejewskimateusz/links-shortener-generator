@@ -1,4 +1,4 @@
-package com.example.linksshortenergenerator.repository;
+package com.example.linksshortenergenerator.repository.link;
 
 import com.example.linksshortenergenerator.model.link.Link;
 import org.springframework.data.jpa.repository.JpaRepository;

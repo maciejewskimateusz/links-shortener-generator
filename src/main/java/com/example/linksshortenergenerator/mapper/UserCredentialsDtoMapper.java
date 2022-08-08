@@ -4,21 +4,20 @@ import com.example.linksshortenergenerator.dto.user.UserCredentialsDto;
 import com.example.linksshortenergenerator.model.user.User;
 import com.example.linksshortenergenerator.model.user.UserRole;
 import lombok.AllArgsConstructor;
-import org.springframework.stereotype.Component;
 
 import java.util.Set;
 import java.util.stream.Collectors;
 
 @AllArgsConstructor
-@Component
 public class UserCredentialsDtoMapper {
 
 
-    public static UserCredentialsDto toDto(User user) {
-        return new UserCredentialsDto(user.getUsername(), user.getPassword(), getUserRoles(user));
-    }
-
-    private static Set<String> getUserRoles(final User user) {
-        return user.getRoles().stream().map(UserRole::getName).collect(Collectors.toSet());
+    public static UserCredentialsDto map(User user) {
+        String username = user.getUsername();
+        String password = user.getPassword();
+        Set<String> roles = user.getRoles().stream()
+                .map(UserRole::getName)
+                .collect(Collectors.toSet());
+        return new UserCredentialsDto(username, password, roles);
     }
 }

@@ -7,4 +7,6 @@
     <include file="0001_create_table_links.xml" relativeToChangelogFile="true"/>
     <include file="0002_create_user_table.xml" relativeToChangelogFile="true"/>
     <include file="0003_add_roles.xml" relativeToChangelogFile="true"/>
+    <include file="0004_drop_roles_column.xml" relativeToChangelogFile="true"/>
+    <include file="0005_add_createdBy_column.xml" relativeToChangelogFile="true"/>
 </databaseChangeLog>
