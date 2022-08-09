@@ -43,11 +43,14 @@ public class LinkService {
     }
 
     public void deleteLink(String id) {
-        String name = SecurityContextHolder.getContext().getAuthentication().getName();
-        boolean admin = SecurityContextHolder.getContext().getAuthentication().getAuthorities().stream().anyMatch(a -> a.getAuthority().equals("ROLE_ADMIN"));
-        SecurityContextHolder.getContext().getAuthentication().getAuthorities().forEach(System.out::println);
-        linkRepository.findById(id).map(Link::getCreatedBy).ifPresent(link -> {
-            if (name.equals(link) || admin) {
+        String name = getUsername();
+        boolean isAdmin = SecurityContextHolder.getContext()
+                .getAuthentication()
+                .getAuthorities()
+                .stream().anyMatch(a -> a.getAuthority().equals("ROLE_ADMIN"));
+
+        linkRepository.findById(id).map(Link::getCreatedBy).ifPresent(createdBy -> {
+            if (name.equals(createdBy) || isAdmin) {
                 linkRepository.deleteById(id);
             } else {
                 throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Link can be deleted only by creator");
@@ -59,7 +62,7 @@ public class LinkService {
         if (linkRepository.existsById(link.getAlias())) {
             throw new AliasAlreadyExistException();
         }
-        String name = SecurityContextHolder.getContext().getAuthentication().getName();
+        String name = getUsername();
         Link newLink = new Link(link.getAlias(), link.getUrl(), LocalDateTime.now(), name);
         return saveAndMap(newLink);
     }
@@ -71,9 +74,13 @@ public class LinkService {
             idGenerator = generateId();
         } while (linkRepository.existsById(idGenerator));
 
-        String name = SecurityContextHolder.getContext().getAuthentication().getName();
+        String name = getUsername();
         Link newLink = new Link(idGenerator, link.getUrl(), LocalDateTime.now(), name);
         return saveAndMap(newLink);
+    }
+
+    private String getUsername() {
+        return SecurityContextHolder.getContext().getAuthentication().getName();
     }
 
     private LinkResponseDto saveAndMap(Link newLink) {
@@ -90,7 +97,7 @@ public class LinkService {
         return randomStringGenerator.generate(12);
     }
 
-    @Scheduled(fixedRate = 10000)
+    @Scheduled(fixedRate = 50000)
     @Transactional
     public void deleteOldLinks() {
         LocalDateTime time = LocalDateTime.now().minusMinutes(LINK_PERIOD_TIME);

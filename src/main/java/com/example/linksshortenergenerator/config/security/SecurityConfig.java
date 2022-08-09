@@ -20,7 +20,7 @@ public class SecurityConfig {
                 .antMatchers("/user/register").permitAll()
                 .antMatchers(HttpMethod.GET, "/api/links/**").hasAnyRole("USER", "ADMIN")
                 .antMatchers(HttpMethod.POST, "/api/links/**").hasAnyRole("USER", "ADMIN")
-                .antMatchers(HttpMethod.DELETE, "/api/links/**").permitAll()
+                .antMatchers(HttpMethod.DELETE, "/api/links/**").hasAnyRole("USER", "ADMIN")
                 .anyRequest().authenticated()
                 .and()
                 .httpBasic()
